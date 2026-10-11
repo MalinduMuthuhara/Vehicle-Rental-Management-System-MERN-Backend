@@ -1,12 +1,19 @@
 {
   "name": "meren-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Vehicle Rental Backend API (Express + MongoDB)",
+  "main": "dist/server.js",
   "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "vehicle-rental",
+    "express",
+    "mongodb"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -19,7 +26,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.4",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^7.0.2"
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
   }
 }

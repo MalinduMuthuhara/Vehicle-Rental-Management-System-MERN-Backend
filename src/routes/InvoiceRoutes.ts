@@ -1,5 +1,5 @@
-import{Router} from 'express'
-import{
+import { Router } from 'express'
+import {
     createInvoice,
     updateInvoice,
     deleteInvoice,
@@ -7,8 +7,10 @@ import{
 } from '../controller/InvoiceController'
 
 const router = Router()
-router.post('/' , createInvoice)
-router.put('/:invoiceId' , updateInvoice)
-router.delete('/:invoiceId' , getInvoices)
+
+router.post('/', createInvoice)
+router.put('/:invoiceId', updateInvoice)
+router.delete('/:invoiceId', deleteInvoice)
+router.get('/', getInvoices)
 
 export default router

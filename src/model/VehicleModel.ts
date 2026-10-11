@@ -1,6 +1,7 @@
-import { Schema, model, Document, Types } from 'mongoose'
 
-interface IVehicle extends Document {
+import { Schema, model, Types } from 'mongoose'
+
+interface IVehicle {
     registrationNumber: string
     brand: string
     model: string
@@ -37,7 +38,8 @@ const vehicleSchema = new Schema<IVehicle>(
         year: {
             type: Number,
             required: true,
-            min: 1900
+            min: 1900,
+            max: new Date().getFullYear() + 1
         },
         color: {
             type: String,
@@ -57,7 +59,11 @@ const vehicleSchema = new Schema<IVehicle>(
         seatingCapacity: {
             type: Number,
             required: true,
-            min: 1
+            min: 1,
+            validate: {
+                validator: Number.isInteger,
+                message: 'Seating capacity must be an integer'
+            }
         },
         dailyRate: {
             type: Number,
@@ -66,7 +72,13 @@ const vehicleSchema = new Schema<IVehicle>(
         },
         status: {
             type: String,
-            enum: ['AVAILABLE', 'BOOKED', 'RENTED', 'MAINTENANCE', 'INACTIVE'],
+            enum: [
+                'AVAILABLE',
+                'BOOKED',
+                'RENTED',
+                'MAINTENANCE',
+                'INACTIVE'
+            ],
             required: true,
             default: 'AVAILABLE'
         },
@@ -89,4 +101,3 @@ const vehicleSchema = new Schema<IVehicle>(
 const VehicleModel = model<IVehicle>('Vehicle', vehicleSchema)
 
 export default VehicleModel
-

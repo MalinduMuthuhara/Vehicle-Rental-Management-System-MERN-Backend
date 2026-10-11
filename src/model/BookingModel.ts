@@ -1,6 +1,6 @@
-import { Schema, model, Document, Types } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 
-interface IBooking extends Document {
+interface IBooking {
     userId: Types.ObjectId
     vehicleId: Types.ObjectId
     pickupBranchId: Types.ObjectId
@@ -42,8 +42,12 @@ const bookingSchema = new Schema<IBooking>(
             type: Date,
             required: true,
             validate: {
-                validator: function (this: IBooking, value: Date) {
-                    return value > this.pickupDate
+                validator: function (this: any, value: Date) {
+                    if (!this.pickupDate || !value) {
+                        return true
+                    }
+
+                    return value.getTime() > new Date(this.pickupDate).getTime()
                 },
                 message: 'Return date must be after pickup date'
             }
@@ -72,4 +76,3 @@ const bookingSchema = new Schema<IBooking>(
 const BookingModel = model<IBooking>('Booking', bookingSchema)
 
 export default BookingModel
-
