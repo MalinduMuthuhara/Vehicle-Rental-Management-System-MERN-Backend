@@ -12,6 +12,7 @@ import rentalRoutes from './routes/RentalRoutes'
 import paymentRoutes from './routes/PaymentRoutes'
 import invoiceRoutes from './routes/InvoiceRoutes'
 import reviewRoutes from './routes/ReviewRoutes'
+import damageReportRoutes from "./routes/DamageReportRoutes";
 
 const app = express()
 
@@ -35,5 +36,6 @@ app.use('/api/rentals', rentalRoutes)
 app.use('/api/payments', paymentRoutes)
 app.use('/api/invoices', invoiceRoutes)
 app.use('/api/reviews', reviewRoutes)
+app.use('/api/damage-reports' , damageReportRoutes)
 
 export default app
