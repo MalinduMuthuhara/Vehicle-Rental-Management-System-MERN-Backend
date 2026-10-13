@@ -5,7 +5,6 @@ import VehicleModel from '../model/VehicleModel'
 export const createVehicle = async (req: Request, res: Response) => {
     try {
         const {registrationNumber,brand,model,year,color,transmission,fuelType,seatingCapacity,dailyRate,status,categoryId,branchId } = req.body
-
         if (!registrationNumber ||!brand ||!model ||!year ||!color ||!transmission ||!fuelType ||!seatingCapacity ||!dailyRate ||!status ||!categoryId ||!branchId) {
             return res.status(400).json({
                 message: 'Please Fill All Fields'
@@ -85,7 +84,6 @@ export const deleteVehicle = async (req:Request , res:Response) => {
 
 // GET /api/vehicles
 export const getVehicles = async (req:Request , res:Response) => {
-
     try{
         const vehicles = await VehicleModel.find().sort({
             createdAt: -1
