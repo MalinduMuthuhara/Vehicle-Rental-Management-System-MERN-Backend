@@ -3,12 +3,12 @@ import { Schema, model, Document, Types } from 'mongoose'
 
 interface IVehicleDocument extends Document {
     vehicleId: Types.ObjectId
-    documentType: 'REGISTRATION' | 'INSURANCE' | 'REVENUE_LICENSE' | 'EMISSION_TEST' | 'OTHER'
+    documentType: 'REGISTRATION' | 'INSURANCE' | 'LICENSE'
     documentNumber: string
     issueDate: Date
     expiryDate?: Date
     fileUrl: string
-    status: 'ACTIVE' | 'EXPIRED' | 'PENDING'
+    status: 'VALID' | 'EXPIRING' | 'EXPIRED' | 'INVALID'
 }
 
 const vehicleDocumentSchema = new Schema<IVehicleDocument>(
@@ -20,7 +20,7 @@ const vehicleDocumentSchema = new Schema<IVehicleDocument>(
         },
         documentType: {
             type: String,
-            enum: ['REGISTRATION', 'INSURANCE', 'REVENUE_LICENSE', 'EMISSION_TEST', 'OTHER'],
+            enum: ['REGISTRATION', 'INSURANCE', 'LICENSE'],
             required: true
         },
         documentNumber: {
@@ -44,9 +44,9 @@ const vehicleDocumentSchema = new Schema<IVehicleDocument>(
         },
         status: {
             type: String,
-            enum: ['ACTIVE', 'EXPIRED', 'PENDING'],
+            enum: ['VALID', 'EXPIRING', 'EXPIRED', 'INVALID'],
             required: true,
-            default: 'PENDING'
+            default: 'VALID'
         }
     },
     {

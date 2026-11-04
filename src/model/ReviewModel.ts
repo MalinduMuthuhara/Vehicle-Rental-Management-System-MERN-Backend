@@ -1,4 +1,3 @@
-
 import { Schema, model, Document, Types } from 'mongoose'
 
 interface IReview extends Document {
