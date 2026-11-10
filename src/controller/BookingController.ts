@@ -33,7 +33,7 @@ export const updateBooking = async (req:Request , res:Response) => {
             {new:true , runValidators:true}
         )
 
-        if(!brunValidatoresooking){
+        if(!booking){
             return res.status(404).json({
                 message : 'Booking Not Found',
             })
