@@ -132,7 +132,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 export const getUsers = async (req: Request, res: Response) => {
     try {
         const users = await UserModel.find()
-            .select('-password')
+            .select('-password')//Password eka Query ekenma ayn karanawa eka pennanne na
             .sort({ createdAt: -1 })
 
         return res.status(200).json(users)

@@ -12,7 +12,8 @@ import rentalRoutes from './routes/RentalRoutes'
 import paymentRoutes from './routes/PaymentRoutes'
 import invoiceRoutes from './routes/InvoiceRoutes'
 import reviewRoutes from './routes/ReviewRoutes'
-import damageReportRoutes from "./routes/DamageReportRoutes";
+import damageReportRoutes from "./routes/DamageReportRoutes"
+import authRoutes from './routes/AuthRoute'
 
 const app = express()
 
@@ -25,6 +26,7 @@ app.get('/', (_req, res) => {
     })
 })
 
+app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/branches', branchRoutes)
 app.use('/api/vehicle-categories', vehicleCategoryRoutes)
@@ -37,5 +39,6 @@ app.use('/api/payments', paymentRoutes)
 app.use('/api/invoices', invoiceRoutes)
 app.use('/api/reviews', reviewRoutes)
 app.use('/api/damage-reports' , damageReportRoutes)
+
 
 export default app

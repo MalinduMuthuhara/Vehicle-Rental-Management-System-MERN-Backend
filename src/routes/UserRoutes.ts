@@ -3,16 +3,20 @@ import {
     createUser,
     updateUser,
     deleteUser,
-    getUsers,
-    
+    getUsers
 } from '../controller/UserController'
+
+import { authenticateToken } from '../middleware/AuthMiddleware'
+import { authorizeRoles } from '../middleware/RoleMiddleware'
 
 const router = Router()
 
-
+// Meka Ona kenekuta Puluwan
 router.post('/', createUser)
-router.put('/:userId', updateUser)
-router.delete('/:userId', deleteUser)
-router.get('/', getUsers)
+
+//put,delete,get ACCESS thiyenne ADMINTA witharay
+router.put('/:userId', authenticateToken, authorizeRoles('ADMIN'), updateUser)
+router.delete('/:userId', authenticateToken, authorizeRoles('ADMIN'), deleteUser)
+router.get('/', authenticateToken, authorizeRoles('ADMIN'), getUsers)
 
 export default router
