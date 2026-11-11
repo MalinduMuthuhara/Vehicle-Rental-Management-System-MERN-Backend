@@ -1,16 +1,21 @@
-import{Router} from 'express'
-import{
+import { Router } from 'express'
+import {
     createBooking,
     updateBooking,
     deleteBooking,
     getBookings,
-}from '../controller/BookingController'
+} from '../controller/BookingController'
+
+import { authenticateToken } from '../middleware/AuthMiddleware'
 
 const router = Router()
 
-router.post('/' , createBooking)
-router.put('/:bookingId', updateBooking)
-router.delete('/:bookingId', deleteBooking)
-router.get('/' , getBookings)
+router.post('/', authenticateToken, createBooking)
+
+router.put('/:bookingId', authenticateToken, updateBooking)
+
+router.delete('/:bookingId', authenticateToken, deleteBooking)
+
+router.get('/', authenticateToken, getBookings)
 
 export default router
