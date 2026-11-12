@@ -14,11 +14,13 @@ import invoiceRoutes from './routes/InvoiceRoutes'
 import reviewRoutes from './routes/ReviewRoutes'
 import damageReportRoutes from "./routes/DamageReportRoutes"
 import authRoutes from './routes/AuthRoute'
+import profitRoutes from './routes/ProfitRoutes'
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.use('/api/profits', profitRoutes)
 
 app.get('/', (_req, res) => {
     res.json({
