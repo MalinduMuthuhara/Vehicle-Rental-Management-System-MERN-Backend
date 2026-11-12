@@ -1,4 +1,4 @@
-import{Router} from 'express'
+import { Router } from 'express'
 import {
     createBranch,
     updateBranch,
@@ -6,11 +6,37 @@ import {
     getBranches,
 } from '../controller/BranchController'
 
+import { authenticateToken } from '../middleware/AuthMiddleware'
+import { authorizeRoles } from '../middleware/RoleMiddleware'
+
 const router = Router()
 
-router.post('/',createBranch )
-router.put('/:branchId',updateBranch)
-router.delete('/:branchId' , deleteBranch)
-router.get('/' ,getBranches)
+router.post(
+    '/',
+    authenticateToken,
+    authorizeRoles('ADMIN', 'EMPLOYEE'),
+    createBranch
+)
+
+router.put(
+    '/:branchId',
+    authenticateToken,
+    authorizeRoles('ADMIN', 'EMPLOYEE'),
+    updateBranch
+)
+
+router.delete(
+    '/:branchId',
+    authenticateToken,
+    authorizeRoles('ADMIN', 'EMPLOYEE'),
+    deleteBranch
+)
+
+router.get(
+    '/',
+    authenticateToken,
+    authorizeRoles('ADMIN', 'EMPLOYEE', 'CUSTOMER'),
+    getBranches
+)
 
 export default router
