@@ -1,5 +1,7 @@
 import { Router } from 'express'
+
 import {
+    registerUser,
     createUser,
     updateUser,
     deleteUser,
@@ -11,12 +13,34 @@ import { authorizeRoles } from '../middleware/RoleMiddleware'
 
 const router = Router()
 
-// Meka Ona kenekuta Puluwan
-router.post('/', createUser)
+router.post('/register', registerUser)
 
-//put,delete,get ACCESS thiyenne ADMINTA witharay
-router.put('/:userId', authenticateToken, authorizeRoles('ADMIN'), updateUser)
-router.delete('/:userId', authenticateToken, authorizeRoles('ADMIN'), deleteUser)
-router.get('/', authenticateToken, authorizeRoles('ADMIN'), getUsers)
+router.post(
+    '/',
+    authenticateToken,
+    authorizeRoles('ADMIN'),
+    createUser
+)
+
+router.put(
+    '/:userId',
+    authenticateToken,
+    authorizeRoles('ADMIN'),
+    updateUser
+)
+
+router.delete(
+    '/:userId',
+    authenticateToken,
+    authorizeRoles('ADMIN'),
+    deleteUser
+)
+
+router.get(
+    '/',
+    authenticateToken,
+    authorizeRoles('ADMIN'),
+    getUsers
+)
 
 export default router

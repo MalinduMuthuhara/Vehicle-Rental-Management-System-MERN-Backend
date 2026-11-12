@@ -1,6 +1,13 @@
 import{Request , Response} from 'express'
 import PaymentModel from '../model/PaymentModel'
 
+interface AuthenticatedRequest extends Request {
+    user?: {
+        userId: string
+        role: 'CUSTOMER' | 'EMPLOYEE' | 'ADMIN'
+    }
+}
+
 // POST /api/payments
 export const createPayment = async (req:Request , res:Response) =>{
     try{
@@ -73,19 +80,41 @@ export const deletePayment = async(req:Request , res:Response) => {
     }
 }
 
-// GET /api/payments/
-export const getPayments = async(req:Request, res:Response) => {
-    try{
-        const payments = await PaymentModel.find().sort({
-            createdAt:-1
-        })
+// GET /api/payments
+export const getPayments = async (req: Request, res: Response) => {
+    try {
+        const authenticatedReq = req as AuthenticatedRequest
+
+        const user = authenticatedReq.user
+
+        if (!user) {
+            return res.status(401).json({
+                message: 'Please Login First',
+            })
+        }
+
+        let payments
+
+        if (user.role === 'CUSTOMER') {
+            // CUSTOMER can only view their own payments
+            payments = await PaymentModel.find({
+                userId: user.userId,
+            }).sort({
+                createdAt: -1,
+            })
+        } else {
+            // ADMIN and EMPLOYEE can view all payments
+            payments = await PaymentModel.find().sort({
+                createdAt: -1,
+            })
+        }
 
         return res.status(200).json(payments)
 
-    }catch(error){
+    } catch (error) {
         return res.status(500).json({
-            message:'Failed To Fetch Payment Data',
-            error
+            message: 'Failed To Fetch Payment Data',
+            error,
         })
     }
 }
